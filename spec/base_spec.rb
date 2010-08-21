@@ -26,9 +26,10 @@ class CatWashWorkflow < Foreman::Base
   end
 end
 
-
 describe Foreman::Base do
-  it "fails" do
-    fail "hey buddy, you should probably start specing for real"
+  it "executes workflows" do
+    workflow = CatWashWorkflow.new
+    workflow.run
+    workflow.in_bathroom?.should be_true
   end
 end

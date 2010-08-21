@@ -5,7 +5,7 @@ class CatWashWorkflow < Foreman::Base
   default_state :new
   
   # Catch the cat
-  job_for :new, :success => :cat_caught, :fail => :catch_cat do
+  job_for :new, :success => :cat_caught do
     puts "Catching the cat..."
     # come_here_kitty.no_dont_run_away.gaaaah.got_you.owwwww_stop_it
     puts "Cat caught!"

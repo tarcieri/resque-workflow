@@ -28,8 +28,8 @@ end
 
 describe Foreman::Base do
   it "executes workflows" do
-    workflow = CatWashWorkflow.new
-    workflow.run
-    workflow.in_bathroom?.should be_true
+    cat_wash = CatWashWorkflow.new
+    cat_wash.run
+    cat_wash.in_bathroom?.should be_true
   end
 end

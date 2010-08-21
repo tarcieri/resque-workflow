@@ -16,6 +16,7 @@ module Foreman
       
       def valid_states(*states)
         @__valid_states = states.map { |state| state.to_sym }
+        validates_inclusion_of :state, :in => @__valid_states
       end
       
       def job_for(state, options = {}) 

@@ -38,7 +38,8 @@ an exercise to the user.
 Status
 ------
 
-This project is total vapor! Dreams made of starstuff, if you will!
+A basic example of the DSL I have in mind is available in spec/base_spec.rb.
+However, this DSL is very much unimplemented at this point.
 
 Copyright
 ---------

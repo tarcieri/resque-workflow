@@ -10,7 +10,10 @@ begin
     gem.email = "tony@medioh.com"
     gem.homepage = "http://github.com/tarcieri/foreman"
     gem.authors = ["Tony Arcieri"]
-    gem.add_development_dependency "rspec", ">= 1.2.9"
+    gem.add_dependency 'activerecord', '>= 3.0.0.rc'
+    gem.add_dependency 'resque'
+    gem.add_dependency 'workflow'
+    gem.add_development_dependency "rspec", ">= 2.0.0.beta.19"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
@@ -38,3 +41,5 @@ Rake::RDocTask.new do |rdoc|
   rdoc.rdoc_files.include('README*')
   rdoc.rdoc_files.include('lib/**/*.rb')
 end
+
+Dir['tasks/**/*.rake'].each { |task| load task }

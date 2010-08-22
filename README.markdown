@@ -1,12 +1,11 @@
 Foreman
 =======
 
-Foreman brings together three fantastically powerful gems to give you the
+Foreman brings together two fantastically powerful gems to give you the
 greatest workflow manager ever:
 
 * workflow: Manages the persistent state of workflows using ActiveRecord 
 * resque: Distributes jobs, the subcomponents of workflows, to workers
-* tap: Provides a DSL for authoring the steps of various jobs
 
 Philosophy
 ----------

@@ -37,7 +37,6 @@ an exercise to the user.
 Example Workflow
 ----------------
 
-<code>
     class CatWashWorkflow < Foreman::Base
       valid_states  :new, :cat_caught, :in_bathroom
       default_state :new
@@ -65,7 +64,6 @@ Example Workflow
         end
       end
     end
-</code>
 
 Status
 ------

@@ -1,39 +1,46 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-class CatWashWorkflow < ActiveRecord::Base
+class Cat< ActiveRecord::Base
   include Foreman
   
-  valid_states  :new, :cat_caught, :in_bathroom
-  default_state :new
-  
+  states :new, :caught, :in_bathroom, :washed, :default => :new 
   workflow do
     # Catch the cat
-    job_for :new, :success => :cat_caught do
+    job_for :new, :success => :caught do |cat|
       puts "Catching the cat..."
-      # come_here_kitty.no_dont_run_away.gaaaah.got_you.owwwww_stop_it
-      puts "Cat caught!"
+      cat.grab      
     end
   
     # Walk to bathroom
-    job_for :cat_caught, :success => :in_bathroom, :fail => :new do
-      puts "Walking to the bathroom..."
-      # dont_jump_out_of_my_hands_you_little_bugger
-      unless @never_works_the_first_time
-        @never_works_the_first_time = true
-      
-        msg = "Uhoh, she sensed I was gonna bathe her and got away"
-        puts msg
-        raise msg
-      end
-      puts "Yay at least got to the bathroom"
+    job_for :caught, :success => :in_bathroom, :fail => :new do |cat|
+      puts "Carrying cat to the bathroom"
+      cat.carry_to_bathroom
     end
+    
+    # Wash cat
+    job_for :in_bathroom, :success => :washed do |cat|
+      puts "Washing cat"
+      cat.wash
+    end
+  end
+  
+  def grab  
+    puts "Cat caught!"
+  end
+  
+  def carry_to_bathroom
+    puts "Cat carried to bathroom!"
+  end
+  
+  def wash
+    puts "Cat washed!"
   end
 end
 
 describe Foreman do
   it "executes workflows" do
-    cat_wash = CatWashWorkflow.new
-    cat_wash.run
-    cat_wash.in_bathroom?.should be_true
+    cat = Cat.new
+    cat.run_workflow
+    cat.washed?.should be_true
   end
 end

@@ -1,6 +1,8 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-class CatWashWorkflow < Foreman::Base
+class CatWashWorkflow < ActiveRecord::Base
+  include Foreman
+  
   valid_states  :new, :cat_caught, :in_bathroom
   default_state :new
   
@@ -28,7 +30,7 @@ class CatWashWorkflow < Foreman::Base
   end
 end
 
-describe Foreman::Base do
+describe Foreman do
   it "executes workflows" do
     cat_wash = CatWashWorkflow.new
     cat_wash.run

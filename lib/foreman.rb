@@ -15,29 +15,35 @@ module Foreman
       end
       
       @__valid_states  = states.map { |state| state.to_sym }
-      @__default_state = options[:default].to_sym || @__valid_states.first
-      
-      unless valid_states.include? default_state
-        raise ArgumentError, "default state '#{@__default_state}' is invalid"
-      end
+      self.default_state = options[:default].to_sym || @__valid_states.first
       
       validates_inclusion_of :state, :in => valid_states
     end
   
-    # Declare a workflow
-    def workflow
-      yield
+    # Declare a workflow by yielding a Foreman::Workflow object
+    def workflow(&block)
+      raise "workflow already declared" if @__workflow
+      @__workflow = Workflow.new
+      @__workflow.instance_eval &block
     end
-  
-    # Specify a job for a given state
-    def job_for(state, options = {}) 
-    end
-    
+      
     # Return the list of valid sates    
-    def valid_states; @__valid_states; end
+    def valid_states; @__valid_states || []; end
     
     # Return the default state
     def default_state; @__default_state; end
+    
+    # Explicitly set the default state
+    def default_state=(state)
+      raise ArgumentError, "invalid state: #{state}" unless valid_states.include? state
+      @__default_state = state
+    end
+  end
+  
+  # A Foreman workflow, not to be confused with the Workflow gem
+  class Workflow
+    def job_for(state, options = {})
+    end
   end
   
   def self.included(klass)

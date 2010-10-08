@@ -23,8 +23,8 @@ module Foreman
     # Declare a workflow by yielding a Foreman::Workflow object
     def workflow(&block)
       raise "workflow already declared" if @__workflow
-      @__workflow = Workflow.new
-      @__workflow.instance_eval &block
+      @__workflow = Workflow.new(self)
+      @__workflow.instance_eval(&block)
     end
       
     # Return the list of valid sates    
@@ -42,7 +42,25 @@ module Foreman
   
   # A Foreman workflow, not to be confused with the Workflow gem
   class Workflow
-    def job_for(state, options = {})
+    def initialize(subject_class)
+      @subject_class = subject_class
+    end
+    
+    def job_for(state, options = {}, &action)
+      subject_class = @subject_class
+      
+      job = Class.new do
+        metaclass = class << self; self; end
+        
+        metaclass.send :define_method, :perform do |id|
+          subject = subject_class.find(id)
+          action subject
+        end
+        
+        metaclass.send :define_method, :action, &action
+      end
+      
+      subject_class.const_set "#{state.to_s.camelize}Job", job
     end
   end
   

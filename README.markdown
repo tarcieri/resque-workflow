@@ -1,11 +1,7 @@
-Foreman
+Resque::Workflow
 =======
 
-Foreman brings together two fantastically powerful gems to give you the
-greatest workflow manager ever:
-
-* workflow: Manages the persistent state of workflows using ActiveRecord 
-* resque: Distributes jobs, the subcomponents of workflows, to workers
+A DSL for describing worflows whose steps are Resque jobs
 
 Philosophy
 ----------

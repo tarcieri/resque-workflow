@@ -1,6 +1,6 @@
 require File.expand_path('../spec_helper', __FILE__)
 
-class Cat< ActiveRecord::Base
+class Cat < ActiveRecord::Base
   include Foreman
   
   states :new, :caught, :in_bathroom, :washed, :default => :new 

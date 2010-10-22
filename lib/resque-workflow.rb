@@ -1,9 +1,7 @@
 require 'active_record'
-require 'workflow'
+require 'resque'
 
-module Foreman
-  include ::Workflow
-
+module Resque::Workflow
   module ClassMethods
     # Set the default state of this workflow
     # Explicitly specify the states of the workflow

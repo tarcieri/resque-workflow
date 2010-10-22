@@ -24,6 +24,7 @@ require 'rspec'
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:rspec)
+task :spec => :rspec
 
 RSpec::Core::RakeTask.new(:rcov) do |spec|
   spec.rcov = true

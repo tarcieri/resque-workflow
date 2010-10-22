@@ -1,7 +1,7 @@
 require File.expand_path('../spec_helper', __FILE__)
 
 class Cat < ActiveRecord::Base
-  include Foreman
+  include Resque::Workflow
   
   states :new, :caught, :in_bathroom, :washed, :default => :new 
   workflow do
@@ -37,7 +37,7 @@ class Cat < ActiveRecord::Base
   end
 end
 
-describe Foreman do
+describe Resque::Workflow do
   it "executes workflows" do
     cat = Cat.new
     cat.run_workflow
